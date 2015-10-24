@@ -86,6 +86,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
             @Override
             public void loadViewData(WeakReference<DeckChildView<Datum>> dcv, Datum item) {
                 loadViewDataInternal(item, dcv);
+                dcv.get().getWebView().loadUrl("http://139.129.24.127/remoteppt/#/" + item.id);
             }
 
             @Override
@@ -96,7 +97,6 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
             //左右滑动删除的监听
             @Override
             public void onViewDismissed(Datum item) {
-//                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
                 mEntries.remove(item);
                 mDeckView.notifyDataSetChanged();
             }
@@ -104,8 +104,10 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
             //点击监听
             @Override
             public void onItemClick(Datum item) {
+
                 Toast.makeText(DeckViewSampleActivity.this, "Item with title: '" + item.headerTitle + "' clicked", Toast.LENGTH_SHORT).show();
-                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
+                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",
+                        DeckViewSampleActivity.this,DeckViewSampleActivity.this, "mark",Configs.SAFE_CODE,"page",item.id+"");
 
             }
 
