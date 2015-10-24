@@ -111,7 +111,8 @@ public class DeckChildViewHeader extends FrameLayout {
         // We ignore taps on the task bar except on the filter and dismiss buttons
         if (!DVConstants.DebugFlags.App.EnableTaskBarTouchEvents) return true;
 
-        return super.onTouchEvent(event);
+        return false;
+//        return super.onTouchEvent(event);
     }
 
     @Override

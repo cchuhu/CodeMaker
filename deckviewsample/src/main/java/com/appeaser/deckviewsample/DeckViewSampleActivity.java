@@ -15,6 +15,8 @@ import com.appeaser.deckview.views.DeckView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.json.JSONException;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,7 +28,7 @@ import java.util.Random;
  * DeckView is *very* young & can only
  * afford basic functionality.
  */
-public class DeckViewSampleActivity extends Activity {
+public class DeckViewSampleActivity extends Activity implements NetPostConnection.SuccessCallback, NetPostConnection.FailCallback{
 
     // View that stacks its children like a deck of cards
     DeckView<Datum> mDeckView;
@@ -94,6 +96,7 @@ public class DeckViewSampleActivity extends Activity {
 
             @Override
             public void onViewDismissed(Datum item) {
+                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
                 mEntries.remove(item);
                 mDeckView.notifyDataSetChanged();
             }
@@ -102,6 +105,7 @@ public class DeckViewSampleActivity extends Activity {
             public void onItemClick(Datum item) {
                 Toast.makeText(DeckViewSampleActivity.this, "Item with title: '" + item.headerTitle + "' clicked", Toast.LENGTH_SHORT).show();
 
+//                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, new Object[]{"1"});
             }
 
             @Override
@@ -224,4 +228,14 @@ public class DeckViewSampleActivity extends Activity {
     }
 
     private static int KEY = 0;
+
+    @Override
+    public void onFail() {
+        Toast.makeText(this,"Fail" , Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess(String result) throws JSONException {
+        Toast.makeText(this,"Success" , Toast.LENGTH_SHORT).show();
+    }
 }
