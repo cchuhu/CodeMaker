@@ -58,4 +58,5 @@
         android:padding="12dp"
         android:src="@drawable/deck_child_view_dismiss_light"
         android:visibility="invisible"/>
+    
 </com.appeaser.deckview.views.DeckChildViewHeader>

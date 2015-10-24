@@ -26,6 +26,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -110,12 +111,6 @@ public class DeckChildViewHeader extends FrameLayout {
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        this.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         // We ignore taps on the task bar except on the filter and dismiss buttons
         if (!DVConstants.DebugFlags.App.EnableTaskBarTouchEvents) return true;
@@ -129,6 +124,13 @@ public class DeckChildViewHeader extends FrameLayout {
         // Initialize the icon and description views
         mApplicationIcon = (ImageView) findViewById(R.id.application_icon);
         webView = (WebView) findViewById(R.id.MyWebView);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
         mActivityDescription = (TextView) findViewById(R.id.activity_description);
         mDismissButton = (ImageView) findViewById(R.id.dismiss_task);
 
