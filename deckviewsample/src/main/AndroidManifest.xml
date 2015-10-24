@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/mc_icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
         <activity
@@ -16,7 +16,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="MDController">
+            android:label="MdController">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
