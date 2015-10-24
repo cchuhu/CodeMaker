@@ -25,8 +25,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +46,7 @@ public class DeckChildViewHeader extends FrameLayout {
     ImageView mDismissButton;
     ImageView mApplicationIcon;
     TextView mActivityDescription;
-    WebView webView;
+//    WebView webView;
 
     // Header drawables
     boolean mCurrentPrimaryColorIsDark;
@@ -123,14 +121,16 @@ public class DeckChildViewHeader extends FrameLayout {
     protected void onFinishInflate() {
         // Initialize the icon and description views
         mApplicationIcon = (ImageView) findViewById(R.id.application_icon);
-        webView = (WebView) findViewById(R.id.MyWebView);
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
+        //************************************************************************************
+//        webView = (WebView) findViewById(R.id.MyWebView);
+//        webView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+//        });
+        //************************************************************************************
         mActivityDescription = (TextView) findViewById(R.id.activity_description);
         mDismissButton = (ImageView) findViewById(R.id.dismiss_task);
 
@@ -199,7 +199,10 @@ public class DeckChildViewHeader extends FrameLayout {
         mApplicationIcon.setContentDescription(headerTitle);
 
         mActivityDescription.setText(headerTitle);
-        webView.loadUrl("http://baidu.com");
+
+        //***************************************************************************
+//        webView.loadUrl("http://baidu.com");
+        //***************************************************************************
 
         // Try and apply the system ui tint
         int existingBgColor = (getBackground() instanceof ColorDrawable) ?

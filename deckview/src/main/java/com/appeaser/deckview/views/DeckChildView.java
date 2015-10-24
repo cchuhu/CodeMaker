@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.PathInterpolator;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.appeaser.deckview.R;
@@ -67,9 +68,10 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
     AnimateableDeckChildViewBounds mViewBounds;
 
     View mContent;
-    DeckChildViewThumbnail mThumbnailView;
+//    DeckChildViewThumbnail mThumbnailView;
     DeckChildViewHeader mHeaderView;
     DeckChildViewCallbacks<T> mCb;
+    WebView MyWebView;
 
     public static final Interpolator ALPHA_IN = new PathInterpolator(0.4f, 0f, 1f, 1f);
 
@@ -143,9 +145,10 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
     protected void onFinishInflate() {
         // Bind the views
         mContent = findViewById(R.id.task_view_content);
+        MyWebView = (WebView) findViewById(R.id.MyWebView);
         mHeaderView = (DeckChildViewHeader) findViewById(R.id.task_view_bar);
-        mThumbnailView = (DeckChildViewThumbnail) findViewById(R.id.task_view_thumbnail);
-        mThumbnailView.updateClipToTaskBar(mHeaderView);
+//        mThumbnailView = (DeckChildViewThumbnail) findViewById(R.id.task_view_thumbnail);
+//        mThumbnailView.updateClipToTaskBar(mHeaderView);
     }
 
     @Override
@@ -163,7 +166,10 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
         mHeaderView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(mConfig.taskBarHeight, MeasureSpec.EXACTLY));
 
         // Measure the thumbnail to be square
-        mThumbnailView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
+//        mThumbnailView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
+
+       MyWebView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
+
         setMeasuredDimension(width, height);
         invalidateOutline();
     }
@@ -247,7 +253,7 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
         // Apply the current dim
         setDim(initialDim);
         // Prepare the thumbnail view alpha
-        mThumbnailView.prepareEnterRecentsAnimation(isTaskViewLaunchTargetTask);
+//        mThumbnailView.prepareEnterRecentsAnimation(isTaskViewLaunchTargetTask);
     }
 
     /**
@@ -304,7 +310,7 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
     void startLaunchTaskAnimation(final Runnable postAnimRunnable, boolean isLaunchingTask, boolean occludesLaunchTarget, boolean lockToTask) {
         if (isLaunchingTask) {
             // Animate the thumbnail alpha back into full opacity for the window animation out
-            mThumbnailView.startLaunchTaskAnimation(postAnimRunnable);
+//            mThumbnailView.startLaunchTaskAnimation(postAnimRunnable);
 
             // Animate the dim
             if (mDimAlpha > 0) {
@@ -434,9 +440,9 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
             }
         } else {
             float dimAlpha = mDimAlpha / 255.0f;
-            if (mThumbnailView != null) {
-                mThumbnailView.setDimAlpha(dimAlpha);
-            }
+//            if (mThumbnailView != null) {
+//                mThumbnailView.setDimAlpha(dimAlpha);
+//            }
             if (mHeaderView != null) {
                 mHeaderView.setDimAlpha(dim);
             }
@@ -496,7 +502,7 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
             mHeaderView.onTaskViewFocusChanged(true, animateFocusedState);
         }
         // Update the thumbnail alpha with the focus
-        mThumbnailView.onFocusChanged(true);
+//        mThumbnailView.onFocusChanged(true);
         // Call the callback
         if (mCb != null) {
             mCb.onDeckChildViewFocusChanged(this, true);
@@ -521,7 +527,7 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
         }
 
         // Update the thumbnail alpha with the focus
-        mThumbnailView.onFocusChanged(false);
+//        mThumbnailView.onFocusChanged(false);
         // Call the callback
         if (mCb != null) {
             mCb.onDeckChildViewFocusChanged(this, false);
@@ -580,9 +586,9 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
     }
 
     public Bitmap getThumbnail() {
-        if (mThumbnailView != null) {
-            return mThumbnailView.getThumbnail();
-        }
+//        if (mThumbnailView != null) {
+//            return mThumbnailView.getThumbnail();
+//        }
 
         return null;
     }
@@ -590,9 +596,12 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
     public void onDataLoaded(T key, Bitmap thumbnail, Drawable headerIcon, String headerTitle, int headerBgColor) {
         if (!isBound() || !mKey.equals(key)) return;
 
-        if (mThumbnailView != null && mHeaderView != null) {
+        if (
+//                mThumbnailView != null &&
+                        mHeaderView != null) {
             // Bind each of the views to the new task data
-            mThumbnailView.rebindToTask(thumbnail);
+            MyWebView.loadUrl("http://baidu.com");
+//            mThumbnailView.rebindToTask(thumbnail);
             mHeaderView.rebindToTask(headerIcon, headerTitle, headerBgColor);
             // Rebind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(this);
@@ -605,9 +614,11 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
     }
 
     public void onDataUnloaded() {
-        if (mThumbnailView != null && mHeaderView != null) {
+        if (
+//                mThumbnailView != null &&
+                mHeaderView != null) {
             // Unbind each of the views from the task data and remove the task callback
-            mThumbnailView.unbindFromTask();
+//            mThumbnailView.unbindFromTask();
             mHeaderView.unbindFromTask();
             // Unbind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(null);
