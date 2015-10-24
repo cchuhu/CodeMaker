@@ -101,6 +101,7 @@ public class DeckViewSampleActivity extends Activity {
             @Override
             public void onItemClick(Datum item) {
                 Toast.makeText(DeckViewSampleActivity.this, "Item with title: '" + item.headerTitle + "' clicked", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
