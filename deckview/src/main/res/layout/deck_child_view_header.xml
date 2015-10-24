@@ -46,8 +46,8 @@
 
     <com.appeaser.deckview.views.FixedSizeImageView
         android:id="@+id/dismiss_task"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_marginEnd="4dp"
         android:layout_gravity="center_vertical|end"
         android:padding="12dp"

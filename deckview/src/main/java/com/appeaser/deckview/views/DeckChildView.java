@@ -3,6 +3,7 @@ package com.appeaser.deckview.views;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -144,7 +145,7 @@ public class DeckChildView<T> extends FrameLayout implements
         return mViewBounds;
     }
 
-    @Override
+    @SuppressLint("MissingSuperCall")
     protected void onFinishInflate() {
         // Bind the views
         mContent = findViewById(R.id.task_view_content);
