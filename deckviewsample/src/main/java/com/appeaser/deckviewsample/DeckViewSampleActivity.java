@@ -93,6 +93,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
                 Picasso.with(DeckViewSampleActivity.this).cancelRequest(item.target);
             }
 
+            //左右滑动删除的监听
             @Override
             public void onViewDismissed(Datum item) {
 //                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
@@ -100,6 +101,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
                 mDeckView.notifyDataSetChanged();
             }
 
+            //点击监听
             @Override
             public void onItemClick(Datum item) {
                 Toast.makeText(DeckViewSampleActivity.this, "Item with title: '" + item.headerTitle + "' clicked", Toast.LENGTH_SHORT).show();
