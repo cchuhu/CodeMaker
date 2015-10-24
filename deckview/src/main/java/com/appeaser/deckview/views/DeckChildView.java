@@ -654,7 +654,8 @@ public class DeckChildView<T> extends FrameLayout implements
 
         if (mThumbnailView != null && mHeaderView != null) {
             // Bind each of the views to the new task data
-            mThumbnailView.rebindToTask(thumbnail);
+            //禁止加载缩略图
+//            mThumbnailView.rebindToTask(thumbnail);
             mHeaderView.rebindToTask(headerIcon, headerTitle, headerBgColor);
             // Rebind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(this);
@@ -669,7 +670,8 @@ public class DeckChildView<T> extends FrameLayout implements
     public void onDataUnloaded() {
         if (mThumbnailView != null && mHeaderView != null) {
             // Unbind each of the views from the task data and remove the task callback
-            mThumbnailView.unbindFromTask();
+            //与上面的bind相对应
+//            mThumbnailView.unbindFromTask();
             mHeaderView.unbindFromTask();
             // Unbind any listeners
             mHeaderView.mApplicationIcon.setOnClickListener(null);

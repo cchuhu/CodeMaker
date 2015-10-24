@@ -131,24 +131,24 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
 
     void loadViewDataInternal(final Datum datum, final WeakReference<DeckChildView<Datum>> weakView) {
         // datum.target can be null
-        Picasso.with(DeckViewSampleActivity.this).cancelRequest(datum.target);
+//        Picasso.with(DeckViewSampleActivity.this).cancelRequest(datum.target);
 
         datum.target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                // Pass loaded Bitmap to view
-                if (weakView.get() != null) {
-                    weakView.get().onDataLoaded(datum, bitmap, mDefaultHeaderIcon, datum.headerTitle, Color.DKGRAY);
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    // Pass loaded Bitmap to view
+                    if (weakView.get() != null) {
+                        weakView.get().onDataLoaded(datum, bitmap, mDefaultHeaderIcon, datum.headerTitle, Color.DKGRAY);
+                    }
                 }
-            }
 
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                // Loading failed. Pass default thumbnail instead
-                if (weakView.get() != null) {
-                    weakView.get().onDataLoaded(datum, mDefaultThumbnail, mDefaultHeaderIcon, datum.headerTitle + " Failed", Color.DKGRAY);
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+                    // Loading failed. Pass default thumbnail instead
+                    if (weakView.get() != null) {
+                        weakView.get().onDataLoaded(datum, mDefaultThumbnail, mDefaultHeaderIcon, datum.headerTitle + " Failed", Color.DKGRAY);
+                    }
                 }
-            }
 
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
@@ -161,7 +161,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
         };
 
         // Begin loading
-        Picasso.with(DeckViewSampleActivity.this).load(datum.link).into(datum.target);
+//        Picasso.with(DeckViewSampleActivity.this).load(datum.link).into(datum.target);
     }
 
 
