@@ -8,13 +8,14 @@ import android.webkit.WebViewClient;
 /**
  * Created by chen on 15/10/24.
  */
-public class MyWebView extends WebView{
+public class MyWebView extends WebView {
     public MyWebView(Context context) {
         super(context);
     }
 
+
     @Override
-    public boolean onTouchEvent(MotionEvent event){
+    public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
 
@@ -27,4 +28,5 @@ public class MyWebView extends WebView{
     public void setWebViewClient(WebViewClient client) {
         super.setWebViewClient(client);
     }
+
 }
