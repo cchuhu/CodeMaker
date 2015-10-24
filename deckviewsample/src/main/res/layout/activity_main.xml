@@ -41,18 +41,18 @@
         android:layout_height="1.5dp"
         android:background="#c0c0c0"/>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btn_ppt"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@mipmap/fileicon"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        />
-    　　
-
+    </android.support.v4.widget.SwipeRefreshLayout>
     　　
 
 
