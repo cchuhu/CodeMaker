@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.PathInterpolator;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.appeaser.deckview.R;
@@ -147,6 +149,13 @@ public class DeckChildView<T> extends FrameLayout implements
         // Bind the views
         mContent = findViewById(R.id.task_view_content);
         antWebView = (ANTWebView) findViewById(R.id.antWebView);
+        antWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
         mHeaderView = (DeckChildViewHeader) findViewById(R.id.task_view_bar);
         mThumbnailView = (DeckChildViewThumbnail) findViewById(R.id.task_view_thumbnail);
         mThumbnailView.updateClipToTaskBar(mHeaderView);
