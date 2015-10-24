@@ -29,8 +29,7 @@ public class DeckViewScroller {
     ObjectAnimator mScrollAnimator;
     float mFinalAnimatedScroll;
 
-    public DeckViewScroller(Context context, DeckViewConfig config,
-                            DeckViewLayoutAlgorithm layoutAlgorithm) {
+    public DeckViewScroller(Context context, DeckViewConfig config, DeckViewLayoutAlgorithm layoutAlgorithm) {
         mConfig = config;
         mScroller = new OverScroller(context);
         mLayoutAlgorithm = layoutAlgorithm;

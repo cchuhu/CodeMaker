@@ -60,8 +60,7 @@ public class DeckViewSwipeHelper {
     public boolean mAllowSwipeTowardsEnd = true;
     private boolean mRtl;
 
-    public DeckViewSwipeHelper(int swipeDirection, Callback callback, float densityScale,
-                               float pagingTouchSlop) {
+    public DeckViewSwipeHelper(int swipeDirection, Callback callback, float densityScale, float pagingTouchSlop) {
         mCallback = callback;
         mSwipeDirection = swipeDirection;
         mVelocityTracker = VelocityTracker.obtain();
@@ -102,19 +101,16 @@ public class DeckViewSwipeHelper {
     }
 
     private float getVelocity(VelocityTracker vt) {
-        return mSwipeDirection == X ? vt.getXVelocity() :
-                vt.getYVelocity();
+        return mSwipeDirection == X ? vt.getXVelocity() : vt.getYVelocity();
     }
 
     private ObjectAnimator createTranslationAnimation(View v, float newPos) {
-        ObjectAnimator anim = ObjectAnimator.ofFloat(v,
-                mSwipeDirection == X ? View.TRANSLATION_X : View.TRANSLATION_Y, newPos);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(v, mSwipeDirection == X ? View.TRANSLATION_X : View.TRANSLATION_Y, newPos);
         return anim;
     }
 
     private float getPerpendicularVelocity(VelocityTracker vt) {
-        return mSwipeDirection == X ? vt.getYVelocity() :
-                vt.getXVelocity();
+        return mSwipeDirection == X ? vt.getYVelocity() : vt.getXVelocity();
     }
 
     private void setTranslation(View v, float translate) {
@@ -206,8 +202,7 @@ public class DeckViewSwipeHelper {
     private void dismissChild(final View view, float velocity) {
         final boolean canAnimViewBeDismissed = mCallback.canChildBeDismissed(view);
         float newPos;
-        if (velocity < 0
-                || (velocity == 0 && getTranslation(view) < 0)
+        if (velocity < 0 || (velocity == 0 && getTranslation(view) < 0)
                 // if we use the Menu to dismiss an item in landscape, animate up
                 || (velocity == 0 && getTranslation(view) == 0 && mSwipeDirection == Y)) {
             newPos = -getSize(view);
@@ -216,9 +211,7 @@ public class DeckViewSwipeHelper {
         }
         int duration = MAX_ESCAPE_ANIMATION_DURATION;
         if (velocity != 0) {
-            duration = Math.min(duration,
-                    (int) (Math.abs(newPos - getTranslation(view)) *
-                            1000f / Math.abs(velocity)));
+            duration = Math.min(duration, (int) (Math.abs(newPos - getTranslation(view)) * 1000f / Math.abs(velocity)));
         } else {
             duration = DEFAULT_ESCAPE_ANIMATION_DURATION;
         }
@@ -304,8 +297,7 @@ public class DeckViewSwipeHelper {
     private void setSwipeAmount(float amount) {
         // don't let items that can't be dismissed be dragged more than
         // maxScrollDistance
-        if (CONSTRAIN_SWIPE
-                && (!isValidSwipeDirection(amount) || !mCallback.canChildBeDismissed(mCurrView))) {
+        if (CONSTRAIN_SWIPE && (!isValidSwipeDirection(amount) || !mCallback.canChildBeDismissed(mCurrView))) {
             float size = getSize(mCurrView);
             float maxScrollDistance = 0.15f * size;
             if (Math.abs(amount) >= size) {
@@ -341,15 +333,12 @@ public class DeckViewSwipeHelper {
         float escapeVelocity = SWIPE_ESCAPE_VELOCITY * mDensityScale;
         float translation = getTranslation(mCurrView);
         // Decide whether to dismiss the current view
-        boolean childSwipedFarEnough = DISMISS_IF_SWIPED_FAR_ENOUGH &&
-                Math.abs(translation) > 0.6 * getSize(mCurrView);
+        boolean childSwipedFarEnough = DISMISS_IF_SWIPED_FAR_ENOUGH && Math.abs(translation) > 0.6 * getSize(mCurrView);
         boolean childSwipedFastEnough = (Math.abs(velocity) > escapeVelocity) &&
                 (Math.abs(velocity) > Math.abs(perpendicularVelocity)) &&
                 (velocity > 0) == (translation > 0);
 
-        boolean dismissChild = mCallback.canChildBeDismissed(mCurrView)
-                && isValidSwipeDirection(translation)
-                && (childSwipedFastEnough || childSwipedFarEnough);
+        boolean dismissChild = mCallback.canChildBeDismissed(mCurrView) && isValidSwipeDirection(translation) && (childSwipedFastEnough || childSwipedFarEnough);
 
         if (dismissChild) {
             // flingadingy

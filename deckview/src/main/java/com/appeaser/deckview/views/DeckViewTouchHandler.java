@@ -44,8 +44,7 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
     DeckViewSwipeHelper mSwipeHelper;
     boolean mInterceptedBySwipeHelper;
 
-    public DeckViewTouchHandler(Context context, DeckView dv,
-                                DeckViewConfig config, DeckViewScroller scroller) {
+    public DeckViewTouchHandler(Context context, DeckView dv, DeckViewConfig config, DeckViewScroller scroller) {
         ViewConfiguration configuration = ViewConfiguration.get(context);
         mMinimumVelocity = configuration.getScaledMinimumFlingVelocity();
         mMaximumVelocity = configuration.getScaledMaximumFlingVelocity();
@@ -56,8 +55,7 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
         mConfig = config;
 
         float densityScale = context.getResources().getDisplayMetrics().density;
-        mSwipeHelper = new DeckViewSwipeHelper(DeckViewSwipeHelper.X, this,
-                densityScale, mPagingTouchSlop);
+        mSwipeHelper = new DeckViewSwipeHelper(DeckViewSwipeHelper.X, this, densityScale, mPagingTouchSlop);
         mSwipeHelper.setMinAlpha(1f);
     }
 
@@ -126,8 +124,7 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
             return true;
         }
 
-        boolean wasScrolling = mScroller.isScrolling() ||
-                (mScroller.mScrollAnimator != null && mScroller.mScrollAnimator.isRunning());
+        boolean wasScrolling = mScroller.isScrolling() || (mScroller.mScrollAnimator != null && mScroller.mScrollAnimator.isRunning());
         int action = ev.getAction();
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN: {
@@ -263,8 +260,7 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
                         // Bound the overscroll to a fixed amount, and inversely scale the y-movement
                         // relative to how close we are to the max overscroll
                         float maxOverScroll = mConfig.taskStackOverscrollPct;
-                        deltaP *= (1f - (Math.min(maxOverScroll, overScrollAmount)
-                                / maxOverScroll));
+                        deltaP *= (1f - (Math.min(maxOverScroll, overScrollAmount) / maxOverScroll));
                     }
                     mScroller.setStackScroll(curStackScroll + deltaP);
                 }
@@ -279,17 +275,8 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
                 int velocity = (int) mVelocityTracker.getYVelocity(mActivePointerId);
                 if (mIsScrolling && (Math.abs(velocity) > mMinimumVelocity)) {
                     float overscrollRangePct = Math.abs((float) velocity / mMaximumVelocity);
-                    int overscrollRange = (int) (Math.min(1f, overscrollRangePct) *
-                            (DVConstants.Values.DView.TaskStackMaxOverscrollRange -
-                                    DVConstants.Values.DView.TaskStackMinOverscrollRange));
-                    mScroller.mScroller.fling(0,
-                            mScroller.progressToScrollRange(mScroller.getStackScroll()),
-                            0, velocity,
-                            0, 0,
-                            mScroller.progressToScrollRange(mDeckView.getStackAlgorithm().mMinScrollP),
-                            mScroller.progressToScrollRange(mDeckView.getStackAlgorithm().mMaxScrollP),
-                            0, DVConstants.Values.DView.TaskStackMinOverscrollRange +
-                                    overscrollRange);
+                    int overscrollRange = (int) (Math.min(1f, overscrollRangePct) * (DVConstants.Values.DView.TaskStackMaxOverscrollRange - DVConstants.Values.DView.TaskStackMinOverscrollRange));
+                    mScroller.mScroller.fling(0, mScroller.progressToScrollRange(mScroller.getStackScroll()), 0, velocity, 0, 0, mScroller.progressToScrollRange(mDeckView.getStackAlgorithm().mMinScrollP), mScroller.progressToScrollRange(mDeckView.getStackAlgorithm().mMaxScrollP), 0, DVConstants.Values.DView.TaskStackMinOverscrollRange + overscrollRange);
                     // Invalidate to kick off computeScroll
                     mDeckView.invalidate();
                 } else if (mScroller.isScrollOutOfBounds()) {
@@ -336,8 +323,7 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
      * Handles generic motion events
      */
     public boolean onGenericMotionEvent(MotionEvent ev) {
-        if ((ev.getSource() & InputDevice.SOURCE_CLASS_POINTER) ==
-                InputDevice.SOURCE_CLASS_POINTER) {
+        if ((ev.getSource() & InputDevice.SOURCE_CLASS_POINTER) == InputDevice.SOURCE_CLASS_POINTER) {
             int action = ev.getAction();
             switch (action & MotionEvent.ACTION_MASK) {
                 case MotionEvent.ACTION_SCROLL:

@@ -30,8 +30,7 @@ import com.appeaser.deckview.utilities.DVUtils;
  * Created by Vikram on 02/04/2015.
  */
 /* A task view */
-public class DeckChildView<T> extends FrameLayout implements
-        View.OnClickListener, View.OnLongClickListener {
+public class DeckChildView<T> extends FrameLayout implements View.OnClickListener, View.OnLongClickListener {
 
     /**
      * The TaskView callbacks
@@ -75,13 +74,12 @@ public class DeckChildView<T> extends FrameLayout implements
     public static final Interpolator ALPHA_IN = new PathInterpolator(0.4f, 0f, 1f, 1f);
 
     // Optimizations
-    ValueAnimator.AnimatorUpdateListener mUpdateDimListener =
-            new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    setTaskProgress((Float) animation.getAnimatedValue());
-                }
-            };
+    ValueAnimator.AnimatorUpdateListener mUpdateDimListener = new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            setTaskProgress((Float) animation.getAnimatedValue());
+        }
+    };
 
 
     public DeckChildView(Context context) {
@@ -159,17 +157,13 @@ public class DeckChildView<T> extends FrameLayout implements
         int heightWithoutPadding = height - getPaddingTop() - getPaddingBottom();
 
         // Measure the content
-        mContent.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
+        mContent.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
 
         // Measure the bar view, and action button
-        mHeaderView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(mConfig.taskBarHeight, MeasureSpec.EXACTLY));
+        mHeaderView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(mConfig.taskBarHeight, MeasureSpec.EXACTLY));
 
         // Measure the thumbnail to be square
-        mThumbnailView.measure(
-                MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
+        mThumbnailView.measure(MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
         setMeasuredDimension(width, height);
         invalidateOutline();
     }
@@ -181,11 +175,9 @@ public class DeckChildView<T> extends FrameLayout implements
         updateViewPropertiesToTaskTransform(toTransform, duration, null);
     }
 
-    void updateViewPropertiesToTaskTransform(DeckChildViewTransform toTransform, int duration,
-                                             ValueAnimator.AnimatorUpdateListener updateCallback) {
+    void updateViewPropertiesToTaskTransform(DeckChildViewTransform toTransform, int duration, ValueAnimator.AnimatorUpdateListener updateCallback) {
         // Apply the transform
-        toTransform.applyToTaskView(this, duration, mConfig.fastOutSlowInInterpolator, false,
-                !mConfig.fakeShadows, updateCallback);
+        toTransform.applyToTaskView(this, duration, mConfig.fastOutSlowInInterpolator, false, !mConfig.fakeShadows, updateCallback);
 
         // Update the task progress
         DVUtils.cancelAnimationWithoutCallbacks(mTaskProgressAnimator);
@@ -232,8 +224,7 @@ public class DeckChildView<T> extends FrameLayout implements
      * Prepares this task view for the enter-recents animations.  This is called earlier in the
      * first layout because the actual animation into recents may take a long time.
      */
-    void prepareEnterRecentsAnimation(boolean isTaskViewLaunchTargetTask,
-                                      boolean occludesLaunchTarget, int offscreenY) {
+    void prepareEnterRecentsAnimation(boolean isTaskViewLaunchTargetTask, boolean occludesLaunchTarget, int offscreenY) {
         int initialDim = getDim();
         if (mConfig.launchedHasConfigurationChanged) {
             // Just load the views as-is
@@ -271,29 +262,20 @@ public class DeckChildView<T> extends FrameLayout implements
             Log.i(getClass().getSimpleName(), "mConfig.launchedFromHome false");
             // Animate the tasks up
             int frontIndex = (ctx.currentStackViewCount - ctx.currentStackViewIndex - 1);
-            int delay = mConfig.transitionEnterFromHomeDelay +
-                    frontIndex * mConfig.taskViewEnterFromHomeStaggerDelay;
+            int delay = mConfig.transitionEnterFromHomeDelay + frontIndex * mConfig.taskViewEnterFromHomeStaggerDelay;
 
             setScaleX(transform.scale);
             setScaleY(transform.scale);
             if (!mConfig.fakeShadows) {
                 animate().translationZ(transform.translationZ);
             }
-            animate()
-                    .translationY(transform.translationY)
-                    .setStartDelay(delay)
-                    .setUpdateListener(ctx.updateListener)
-                    .setInterpolator(mConfig.quintOutInterpolator)
-                    .setDuration(mConfig.taskViewEnterFromHomeDuration +
-                            frontIndex * mConfig.taskViewEnterFromHomeStaggerDelay)
-                    .withEndAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Decrement the post animation trigger
-                            ctx.postAnimationTrigger.decrement();
-                        }
-                    })
-                    .start();
+            animate().translationY(transform.translationY).setStartDelay(delay).setUpdateListener(ctx.updateListener).setInterpolator(mConfig.quintOutInterpolator).setDuration(mConfig.taskViewEnterFromHomeDuration + frontIndex * mConfig.taskViewEnterFromHomeStaggerDelay).withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    // Decrement the post animation trigger
+                    ctx.postAnimationTrigger.decrement();
+                }
+            }).start();
             ctx.postAnimationTrigger.increment();
             startDelay = delay;
         }
@@ -312,22 +294,14 @@ public class DeckChildView<T> extends FrameLayout implements
      * Animates this task view as it leaves recents by pressing home.
      */
     void startExitToHomeAnimation(ViewAnimation.TaskViewExitContext ctx) {
-        animate()
-                .translationY(ctx.offscreenTranslationY)
-                .setStartDelay(0)
-                .setUpdateListener(null)
-                .setInterpolator(mConfig.fastOutLinearInInterpolator)
-                .setDuration(mConfig.taskViewExitToHomeDuration)
-                .withEndAction(ctx.postAnimationTrigger.decrementAsRunnable())
-                .start();
+        animate().translationY(ctx.offscreenTranslationY).setStartDelay(0).setUpdateListener(null).setInterpolator(mConfig.fastOutLinearInInterpolator).setDuration(mConfig.taskViewExitToHomeDuration).withEndAction(ctx.postAnimationTrigger.decrementAsRunnable()).start();
         ctx.postAnimationTrigger.increment();
     }
 
     /**
      * Animates this task view as it exits recents
      */
-    void startLaunchTaskAnimation(final Runnable postAnimRunnable, boolean isLaunchingTask,
-                                  boolean occludesLaunchTarget, boolean lockToTask) {
+    void startLaunchTaskAnimation(final Runnable postAnimRunnable, boolean isLaunchingTask, boolean occludesLaunchTarget, boolean lockToTask) {
         if (isLaunchingTask) {
             // Animate the thumbnail alpha back into full opacity for the window animation out
             mThumbnailView.startLaunchTaskAnimation(postAnimRunnable);
@@ -345,13 +319,7 @@ public class DeckChildView<T> extends FrameLayout implements
             // If this is another view in the task grouping and is in front of the launch task,
             // animate it away first
             if (occludesLaunchTarget) {
-                animate().alpha(0f)
-                        .translationY(getTranslationY() + mConfig.taskViewAffiliateGroupEnterOffsetPx)
-                        .setStartDelay(0)
-                        .setUpdateListener(null)
-                        .setInterpolator(mConfig.fastOutLinearInInterpolator)
-                        .setDuration(mConfig.taskViewExitToAppDuration)
-                        .start();
+                animate().alpha(0f).translationY(getTranslationY() + mConfig.taskViewAffiliateGroupEnterOffsetPx).setStartDelay(0).setUpdateListener(null).setInterpolator(mConfig.fastOutLinearInInterpolator).setDuration(mConfig.taskViewExitToAppDuration).start();
             }
         }
     }
@@ -363,27 +331,20 @@ public class DeckChildView<T> extends FrameLayout implements
         // Disabling clipping with the stack while the view is animating away
         setClipViewInStack(false);
 
-        animate().translationX(mConfig.taskViewRemoveAnimTranslationXPx)
-                .alpha(0f)
-                .setStartDelay(0)
-                .setUpdateListener(null)
-                .setInterpolator(mConfig.fastOutSlowInInterpolator)
-                .setDuration(mConfig.taskViewRemoveAnimDuration)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        // We just throw this into a runnable because starting a view property
-                        // animation using layers can cause inconsisten results if we try and
-                        // update the layers while the animation is running.  In some cases,
-                        // the runnabled passed in may start an animation which also uses layers
-                        // so we defer all this by posting this.
-                        r.run();
+        animate().translationX(mConfig.taskViewRemoveAnimTranslationXPx).alpha(0f).setStartDelay(0).setUpdateListener(null).setInterpolator(mConfig.fastOutSlowInInterpolator).setDuration(mConfig.taskViewRemoveAnimDuration).withEndAction(new Runnable() {
+            @Override
+            public void run() {
+                // We just throw this into a runnable because starting a view property
+                // animation using layers can cause inconsisten results if we try and
+                // update the layers while the animation is running.  In some cases,
+                // the runnabled passed in may start an animation which also uses layers
+                // so we defer all this by posting this.
+                r.run();
 
-                        // Re-enable clipping with the stack (we will reuse this view)
-                        setClipViewInStack(true);
-                    }
-                })
-                .start();
+                // Re-enable clipping with the stack (we will reuse this view)
+                setClipViewInStack(true);
+            }
+        }).start();
     }
 
     /**
@@ -467,9 +428,7 @@ public class DeckChildView<T> extends FrameLayout implements
         if (mConfig.useHardwareLayers) {
             // Defer setting hardware layers if we have not yet measured, or there is no dim to draw
             if (getMeasuredWidth() > 0 && getMeasuredHeight() > 0) {
-                mDimColorFilter =
-                        new PorterDuffColorFilter(Color.argb(mDimAlpha, 0, 0, 0),
-                                PorterDuff.Mode.SRC_ATOP);
+                mDimColorFilter = new PorterDuffColorFilter(Color.argb(mDimAlpha, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
                 mDimLayerPaint.setColorFilter(mDimColorFilter);
                 mContent.setLayerType(LAYER_TYPE_HARDWARE, mDimLayerPaint);
             }
@@ -628,10 +587,8 @@ public class DeckChildView<T> extends FrameLayout implements
         return null;
     }
 
-    public void onDataLoaded(T key, Bitmap thumbnail, Drawable headerIcon,
-                             String headerTitle, int headerBgColor) {
-        if (!isBound() || !mKey.equals(key))
-            return;
+    public void onDataLoaded(T key, Bitmap thumbnail, Drawable headerIcon, String headerTitle, int headerBgColor) {
+        if (!isBound() || !mKey.equals(key)) return;
 
         if (mThumbnailView != null && mHeaderView != null) {
             // Bind each of the views to the new task data
@@ -682,8 +639,7 @@ public class DeckChildView<T> extends FrameLayout implements
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (DVConstants.DebugFlags.App.EnableTaskFiltering
-                            && v == mHeaderView.mApplicationIcon) {
+                    if (DVConstants.DebugFlags.App.EnableTaskFiltering && v == mHeaderView.mApplicationIcon) {
                         if (mCb != null) {
                             mCb.onDeckChildViewAppIconClicked(tv);
                         }
