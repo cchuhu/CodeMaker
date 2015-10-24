@@ -31,7 +31,7 @@ public class Datum implements Parcelable {
         return 0;
     }
 
-    public Datum(Parcel in) {
+        public Datum(Parcel in) {
         readFromParcel(in);
     }
 

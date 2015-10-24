@@ -13,10 +13,10 @@
      limitations under the License.
 -->
 <com.appeaser.deckview.views.DeckChildViewHeader android:id="@+id/task_view_bar"
-                                                 xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="@dimen/deck_child_header_bar_height"
-                                                 android:layout_gravity="top|center_horizontal">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/deck_child_header_bar_height"
+    android:layout_gravity="top|center_horizontal">
 
     <com.appeaser.deckview.views.FixedSizeImageView
         android:id="@+id/application_icon"
@@ -42,6 +42,11 @@
         android:text="@string/deck_view_empty_message"
         android:textColor="#ffffffff"
         android:textSize="16sp"/>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/MyWebView"/>
 
     <com.appeaser.deckview.views.FixedSizeImageView
         android:id="@+id/dismiss_task"

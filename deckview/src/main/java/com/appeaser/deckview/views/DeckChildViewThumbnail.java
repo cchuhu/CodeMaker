@@ -115,6 +115,7 @@ public class DeckChildViewThumbnail extends View {
         mThumbnail = bm;
 
         if (bm != null) {
+            //图片拉伸效果
             mBitmapShader = new BitmapShader(bm, Shader.TileMode.CLAMP,
                     Shader.TileMode.CLAMP);
             mDrawPaint.setShader(mBitmapShader);
