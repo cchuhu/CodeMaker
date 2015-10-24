@@ -68,7 +68,9 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
         if (mEntries == null) {
             mEntries = new ArrayList<>();
 
-            for (int i = 1; i < 10; i++) {
+            for (int i = 1; i < 20; i++) {
+//                DeckChildView deckChildView = (DeckChildView) mDeckView.getChildAt(i);
+//                deckChildView.getWebView().loadUrl("http://139.129.24.127/remoteppt/#/" + i);
                 Datum datum = new Datum();
                 datum.id = generateUniqueKey();
                 datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";

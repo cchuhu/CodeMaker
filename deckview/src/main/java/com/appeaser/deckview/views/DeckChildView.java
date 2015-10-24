@@ -150,6 +150,7 @@ public class DeckChildView<T> extends FrameLayout implements
         // Bind the views
         mContent = findViewById(R.id.task_view_content);
         antWebView = (ANTWebView) findViewById(R.id.antWebView);
+        antWebView.getSettings().setJavaScriptEnabled(true);
         antWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -182,7 +183,7 @@ public class DeckChildView<T> extends FrameLayout implements
                 MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY),
                 MeasureSpec.makeMeasureSpec(widthWithoutPadding, MeasureSpec.EXACTLY));
         setMeasuredDimension(width, height);
-        antWebView.loadUrl("http://baidu.com");
+//        antWebView.loadUrl("http://139.129.24.127/remoteppt/#/1");
 
         // Measure the thumbnail to be square
         mThumbnailView.measure(
@@ -730,5 +731,9 @@ public class DeckChildView<T> extends FrameLayout implements
             }
         }
         return false;
+    }
+
+    public ANTWebView getWebView(){
+        return antWebView;
     }
 }

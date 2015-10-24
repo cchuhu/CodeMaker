@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class MainActivity extends Activity {
+import org.json.JSONException;
+
+public class MainActivity extends Activity implements NetPostConnection.SuccessCallback,NetPostConnection.FailCallback{
     //PPT按钮
     public ImageButton btn_ppt;
 
@@ -35,4 +37,13 @@ public class MainActivity extends Activity {
     }
 
 
+    @Override
+    public void onFail() {
+
+    }
+
+    @Override
+    public void onSuccess(String result) throws JSONException {
+
+    }
 }
