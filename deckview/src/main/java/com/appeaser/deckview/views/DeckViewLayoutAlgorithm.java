@@ -88,7 +88,7 @@ public class DeckViewLayoutAlgorithm<T> {
                 left + size, mStackRect.top + size);
 
         // Update the affiliation offsets
-        float visibleTaskPct = 0.5f;
+        float visibleTaskPct = 0.9f;
         mWithinAffiliationOffset = mConfig.taskBarHeight;
         mBetweenAffiliationOffset = (int) (visibleTaskPct * mTaskRect.height());
     }
