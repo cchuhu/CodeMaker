@@ -11,12 +11,15 @@ import org.json.JSONException;
 public class MainActivity extends Activity implements NetPostConnection.SuccessCallback,NetPostConnection.FailCallback{
     //PPT按钮
     public ImageButton btn_ppt;
+    private NetPostConnection conn;
+    private String safecode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
     }
 
     /**
@@ -28,12 +31,21 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
+                safecode = generateSafeCode();
                 i.setClass(MainActivity.this, DeckViewSampleActivity.class);
                 MainActivity.this.startActivity(i);
             }
         });
 
 
+    }
+
+    private String generateSafeCode(){
+        long time = System.currentTimeMillis();
+
+        String SafeCode =Long.toHexString(time).substring(0,6);
+
+        return SafeCode;
     }
 
 
