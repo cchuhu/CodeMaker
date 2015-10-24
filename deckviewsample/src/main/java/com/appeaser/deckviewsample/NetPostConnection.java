@@ -33,7 +33,7 @@ public class NetPostConnection {
                 try {
                     URLConnection uc;
                     uc = new URL(url).openConnection();
-                    uc.setReadTimeout(10*1000);
+                    uc.setConnectTimeout(30*1000);
                     uc.setDoOutput(true);
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(uc.getOutputStream(), "utf-8"));
                     bw.write(paramsStr.toString());

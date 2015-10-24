@@ -44,6 +44,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
                 Intent i = new Intent();
                 i.setClass(MainActivity.this, DeckViewSampleActivity.class);
                 MainActivity.this.startActivity(i);
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
