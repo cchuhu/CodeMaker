@@ -578,7 +578,9 @@ public class DeckView<T> extends FrameLayout implements /*TaskStack.TaskStackCal
         DeckChildView<T> frontMostChild = (DeckChildView) getChildAt(getChildCount() / 2);
 
         if (frontMostChild != null) {
-            return mCallback.getData().indexOf(frontMostChild.getAttachedKey());
+            int index = mCallback.getData().indexOf(frontMostChild.getAttachedKey());
+            System.out.println(getChildCount() +"%%%%%%%%%" + index);
+            return index;
         }
 
         return -1;
@@ -643,6 +645,7 @@ public class DeckView<T> extends FrameLayout implements /*TaskStack.TaskStackCal
         int childCount = getChildCount();
         for (int i = 0; i < childCount; i++) {
             DeckChildView tv = (DeckChildView) getChildAt(i);
+            tv.getWebView().loadUrl("http://www.baidu.com");
             if (tv.getBackground() != null) {
                 tv.getBackground().getPadding(mTmpRect);
             } else {

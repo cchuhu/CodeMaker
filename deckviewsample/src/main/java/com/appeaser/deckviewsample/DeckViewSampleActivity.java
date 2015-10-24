@@ -19,7 +19,6 @@ import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Basic sample for DeckView.
@@ -69,8 +68,6 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
             mEntries = new ArrayList<>();
 
             for (int i = 1; i < 20; i++) {
-//                DeckChildView deckChildView = (DeckChildView) mDeckView.getChildAt(i);
-//                deckChildView.getWebView().loadUrl("http://139.129.24.127/remoteppt/#/" + i);
                 Datum datum = new Datum();
                 datum.id = generateUniqueKey();
                 datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";
@@ -98,7 +95,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
 
             @Override
             public void onViewDismissed(Datum item) {
-                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
+//                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
                 mEntries.remove(item);
                 mDeckView.notifyDataSetChanged();
             }
@@ -106,8 +103,8 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
             @Override
             public void onItemClick(Datum item) {
                 Toast.makeText(DeckViewSampleActivity.this, "Item with title: '" + item.headerTitle + "' clicked", Toast.LENGTH_SHORT).show();
+                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, "id",item.id+"");
 
-//                NetPostConnection connection = new NetPostConnection("http://139.129.24.127/remoteppt/test.php",DeckViewSampleActivity.this,DeckViewSampleActivity.this, new Object[]{"1"});
             }
 
             @Override
@@ -174,41 +171,41 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        // Add a new item to the end of the list
-        if (id == R.id.action_add) {
-            Datum datum = new Datum();
-            datum.id = generateUniqueKey();
-            datum.headerTitle = "(New) Image ID " + datum.id;
-            datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";
-            mEntries.add(datum);
-            mDeckView.notifyDataSetChanged();
-            return true;
-        } else if (id == R.id.action_add_multiple) {
-            // Add multiple items (between 5 & 10 items)
-            // at random indices
-            Random rand = new Random();
-
-            // adding between 5 and 10 items
-            int numberOfItemsToAdd = rand.nextInt(6) + 5;
-
-            for (int i = 0; i < numberOfItemsToAdd; i++) {
-                int atIndex = mEntries.size() > 0 ? rand.nextInt(mEntries.size()) : 0;
-
-                Datum datum = new Datum();
-                datum.id = generateUniqueKey();
-                datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";
-                datum.headerTitle = "(New) Image ID " + datum.id;
-                mEntries.add(atIndex, datum);
-            }
-
-            mDeckView.notifyDataSetChanged();
-            return true;
-        }
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        // Add a new item to the end of the list
+//        if (id == R.id.action_add) {
+//            Datum datum = new Datum();
+//            datum.id = generateUniqueKey();
+//            datum.headerTitle = "(New) Image ID " + datum.id;
+//            datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";
+//            mEntries.add(datum);
+//            mDeckView.notifyDataSetChanged();
+//            return true;
+//        } else if (id == R.id.action_add_multiple) {
+//            // Add multiple items (between 5 & 10 items)
+//            // at random indices
+//            Random rand = new Random();
+//
+//            // adding between 5 and 10 items
+//            int numberOfItemsToAdd = rand.nextInt(6) + 5;
+//
+//            for (int i = 0; i < numberOfItemsToAdd; i++) {
+//                int atIndex = mEntries.size() > 0 ? rand.nextInt(mEntries.size()) : 0;
+//
+//                Datum datum = new Datum();
+//                datum.id = generateUniqueKey();
+//                datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";
+//                datum.headerTitle = "(New) Image ID " + datum.id;
+//                mEntries.add(atIndex, datum);
+//            }
+//
+//            mDeckView.notifyDataSetChanged();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

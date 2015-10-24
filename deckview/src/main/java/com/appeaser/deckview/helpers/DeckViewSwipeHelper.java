@@ -338,16 +338,16 @@ public class DeckViewSwipeHelper {
                 (Math.abs(velocity) > Math.abs(perpendicularVelocity)) &&
                 (velocity > 0) == (translation > 0);
 
-        boolean dismissChild = mCallback.canChildBeDismissed(mCurrView) && isValidSwipeDirection(translation) && (childSwipedFastEnough || childSwipedFarEnough);
-
-        if (dismissChild) {
-            // flingadingy
-            dismissChild(mCurrView, childSwipedFastEnough ? velocity : 0f);
-        } else {
-            // snappity
-            mCallback.onDragCancelled(mCurrView);
-            snapChild(mCurrView, velocity);
-        }
+//        boolean dismissChild = mCallback.canChildBeDismissed(mCurrView) && isValidSwipeDirection(translation) && (childSwipedFastEnough || childSwipedFarEnough);
+//
+//        if (dismissChild) {
+//            // flingadingy
+//            dismissChild(mCurrView, childSwipedFastEnough ? velocity : 0f);
+//        } else {
+//            // snappity
+//            mCallback.onDragCancelled(mCurrView);
+//            snapChild(mCurrView, velocity);
+//        }
     }
 
     public interface Callback {

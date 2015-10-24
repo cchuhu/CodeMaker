@@ -260,7 +260,8 @@ public class DeckViewTouchHandler implements DeckViewSwipeHelper.Callback {
                     float curStackScroll = mScroller.getStackScroll();
                     float overScrollAmount = mScroller.getScrollAmountOutOfBounds(curStackScroll + deltaP);
                     if (Float.compare(overScrollAmount, 0f) != 0) {
-                        // Bound the overscroll to a fixed amount, and inversely scale the y-movement
+                        // Bound the overscroll t
+                        // o a fixed amount, and inversely scale the y-movement
                         // relative to how close we are to the max overscroll
                         float maxOverScroll = mConfig.taskStackOverscrollPct;
                         deltaP *= (1f - (Math.min(maxOverScroll, overScrollAmount)
