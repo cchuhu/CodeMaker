@@ -14,6 +14,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<Infos> myList = new ArrayList<>();
+    private  MyViewHolder mvh;
     //构造方法
     public MyAdapter(Context context){
         this.context = context;
@@ -29,16 +30,38 @@ public class MyAdapter extends RecyclerView.Adapter {
         MyViewHolder myViewHolder = new MyViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_cell,null));
         return myViewHolder;
     }
+
+    public interface OnItemClickLitener
+    {void onItemClick(View view, int position);
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
+    {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
     //通常在这里添加数据，动态修改布局
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         //强制转换为自己的viewholder
-        MyViewHolder mvh = (MyViewHolder) viewHolder;
+       mvh = (MyViewHolder) viewHolder;
         Infos jb = myList.get(i);
 
         mvh.GetPidTextView().setText(jb.getPid());
 
-    }
+        if (mOnItemClickLitener != null) {
+            mvh.list_cell_view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = mvh.getLayoutPosition();
+                    mOnItemClickLitener.onItemClick(mvh.list_cell_view, pos);
+                }
+            });
+        }
+
+        }
     //返回数据的数量
     @Override
     public int getItemCount() {
@@ -52,6 +75,7 @@ public class MyAdapter extends RecyclerView.Adapter {
         //参数就是自定义的XML的布局View，构造方法必须实现
         public MyViewHolder(View list_cell_view) {
             super(list_cell_view);
+            this.list_cell_view = list_cell_view;
             tv_pid = (TextView) list_cell_view.findViewById(R.id.tv_pid);
         }
 

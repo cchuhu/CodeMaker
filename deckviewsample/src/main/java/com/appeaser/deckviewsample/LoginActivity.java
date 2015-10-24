@@ -62,7 +62,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (!tv_safe_code.getText().toString().isEmpty()){
+                if ((!tv_safe_code.getText().toString().isEmpty()&&(!et_username.getText().toString().isEmpty()))){
                     mydialog.show();
                     new NetPostConnection(Configs.URL_SAFE_CODE, new NetPostConnection.SuccessCallback() {
                         @Override
@@ -85,6 +85,8 @@ public class LoginActivity extends Activity {
                         public void onFail() {
                         }
                     },"match_code",Configs.SAFE_CODE);
+                }else {
+                    Toast.makeText(LoginActivity.this, "登陆错误", Toast.LENGTH_LONG).show();
                 }
                 }
         });

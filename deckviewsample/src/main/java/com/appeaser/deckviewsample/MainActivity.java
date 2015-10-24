@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -64,6 +65,12 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
             mLists.add(jb);
         }
         myAdapter.addAll(mLists);
+        myAdapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(MainActivity.this,"lalallalalal",Toast.LENGTH_LONG).show();
+            }
+        });
 
 
     }
