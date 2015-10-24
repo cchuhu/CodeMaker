@@ -18,6 +18,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.PathInterpolator;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 import com.appeaser.deckview.R;
@@ -601,6 +602,13 @@ public class DeckChildView<T> extends FrameLayout implements View.OnClickListene
                         mHeaderView != null) {
             // Bind each of the views to the new task data
             MyWebView.loadUrl("http://baidu.com");
+            MyWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+                    return true;
+                }
+            });
 //            mThumbnailView.rebindToTask(thumbnail);
             mHeaderView.rebindToTask(headerIcon, headerTitle, headerBgColor);
             // Rebind any listeners
