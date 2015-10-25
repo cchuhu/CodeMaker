@@ -54,7 +54,8 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                infosList.clear();
+                myAdapter.Clear();
 
                 new NetPostConnection(Configs.URL_GET_LIST, new NetPostConnection.SuccessCallback() {
                     @Override
@@ -87,13 +88,13 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
 //                MainActivity.this.startActivity(i);
             }
         });
-        swipeRefreshLayout.setRefreshing(true);
 
 
         myAdapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "lalallalala:"+position, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "lalallalala:" + position, Toast.LENGTH_LONG).show();
+
             }
         });
 

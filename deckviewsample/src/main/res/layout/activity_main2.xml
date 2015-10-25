@@ -82,7 +82,7 @@
         android:layout_marginTop="40dp"
         android:background="@mipmap/register_back"
         android:text="登 录"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textSize="18dp"
         />
 
