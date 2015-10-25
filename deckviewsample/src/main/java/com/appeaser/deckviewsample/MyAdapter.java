@@ -14,7 +14,6 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<Infos> myList = new ArrayList<>();
-    private  MyViewHolder mvh;
     //构造方法
     public MyAdapter(Context context){
         this.context = context;
@@ -38,6 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter {
 
     public interface OnItemClickLitener
     {void onItemClick(View view, int position);
+        void OnItemLongClick(View v,int positon);
     }
 
     private OnItemClickLitener mOnItemClickLitener;
@@ -51,17 +51,25 @@ public class MyAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         //强制转换为自己的viewholder
-       mvh = (MyViewHolder) viewHolder;
+        final MyViewHolder mvh = (MyViewHolder) viewHolder;
         Infos jb = myList.get(i);
 
         mvh.GetPidTextView().setText(jb.getPid());
 
         if (mOnItemClickLitener != null) {
-            mvh.list_cell_view.setOnClickListener(new View.OnClickListener() {
+            mvh.getCellView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = mvh.getLayoutPosition();
-                    mOnItemClickLitener.onItemClick(mvh.list_cell_view, pos);
+                    mOnItemClickLitener.onItemClick(v, pos);
+                }
+            });
+            mvh.list_cell_view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int pos = mvh.getLayoutPosition();
+                    mOnItemClickLitener.OnItemLongClick(v, pos);
+                    return false;
                 }
             });
         }
@@ -86,6 +94,9 @@ public class MyAdapter extends RecyclerView.Adapter {
 
         public TextView GetPidTextView(){
             return tv_pid;
+        }
+        public View getCellView(){
+            return list_cell_view;
         }
     }
 }

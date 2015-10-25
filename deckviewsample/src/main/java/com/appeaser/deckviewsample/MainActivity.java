@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,7 +102,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
             public void onItemClick(View view, int position) {
                 current_position = position;
 
-                Toast.makeText(MainActivity.this, "lalallalala:" + current_position, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "lalallalala:" + position, Toast.LENGTH_LONG).show();
 
                 new NetPostConnection(Configs.URL_CHANGE_PID, new NetPostConnection.SuccessCallback() {
                     @Override
@@ -120,6 +119,11 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
 
                     }
                 }, "pid" , Configs.listInfos.get(position).getPid());
+            }
+
+            @Override
+            public void OnItemLongClick(View v, int positon) {
+
             }
         });
 
