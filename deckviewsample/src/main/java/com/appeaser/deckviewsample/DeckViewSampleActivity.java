@@ -74,6 +74,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
                 datum.headerTitle = "Image ID " + datum.id;
                 mEntries.add(datum);
             }
+            System.out.println(mEntries.size()+"%%%%%%%%%%%%");
         }
 
         // Callback implementation

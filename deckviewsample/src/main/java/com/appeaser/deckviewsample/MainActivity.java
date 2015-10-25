@@ -1,11 +1,13 @@
 package com.appeaser.deckviewsample;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -22,6 +24,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
     private String username;
     private List<Infos> infosList = new ArrayList<>();
     private Infos info;
+    private TextView cancel;
 
 
     @Override
@@ -36,6 +39,8 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
      * 初始化界面元素
      */
     private void init() {
+        cancel = (TextView) findViewById(R.id.tv_cancel);
+
         username = getIntent().getStringExtra("USERNAME");
         username="adadw@qq.com";
 
@@ -94,9 +99,26 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(MainActivity.this, "lalallalala:" + position, Toast.LENGTH_LONG).show();
+                new NetPostConnection(Configs.URL_CHANGE_PID, new NetPostConnection.SuccessCallback() {
+                    @Override
+                    public void onSuccess(String result) throws JSONException {
+                        System.out.println(" List Table");
+                        Intent intent = new Intent(MainActivity.this,DeckViewSampleActivity.class);
+                        startActivity(intent);
+                    }
+                }, new NetPostConnection.FailCallback() {
+                    @Override
+                    public void onFail() {
 
+                    }
+                }, "pid" , position);
             }
         });
+
+    }
+
+    //断开连接
+    private void breakConnection(){
 
     }
 

@@ -33,6 +33,16 @@
             android:textColor="#ffffff"
             android:textSize="20dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_cancel"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:text="注销"/>
+
 
     </RelativeLayout>
 
