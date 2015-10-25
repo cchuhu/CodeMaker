@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -67,12 +66,10 @@ public class LoginActivity extends Activity {
                     new NetPostConnection(Configs.URL_SAFE_CODE, new NetPostConnection.SuccessCallback() {
                         @Override
                         public void onSuccess(String result) throws JSONException {
-//                            myHandlerRunnable = new MyHandlerRunnable(result);
-//
-//                            hander.postDelayed(myHandlerRunnable,18*1000);
                             if(result.equals("0")){
                                 mydialog.dismiss();
                                 Intent i = new Intent(LoginActivity.this,MainActivity.class);
+                                i.putExtra("USERNAME",et_username.getText().toString());
                                 startActivity(i);
                                 LoginActivity.this.finish();
                             }else {
@@ -91,33 +88,6 @@ public class LoginActivity extends Activity {
                 }
         });
 
-
-//        btn_login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (generated&&(!et_username.getText().toString().isEmpty())){
-//                    new NetPostConnection(Configs.URL_LOGIN, new NetPostConnection.SuccessCallback() {
-//                        @Override
-//                        public void onSuccess(String result) throws JSONException {
-//
-//
-//                            //TODO waiting for the PHP results
-//
-//                            //成功则跳转到主界面
-//
-//                        }
-//                    }, new NetPostConnection.FailCallback() {
-//                        @Override
-//                        public void onFail() {
-//                            Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_LONG).show();
-//                        }
-//                    },"username",et_username.getText().toString());
-//                }else {
-//                    Toast.makeText(LoginActivity.this,"请先输入用户名或在网页端填写安全码",Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
-//
     }
 
     private String generateSafeCode(){
@@ -126,7 +96,6 @@ public class LoginActivity extends Activity {
         int size = Long.toHexString(time).length();
 
         String SafeCode =Long.toHexString(time).substring(size-7,size-1);
-        Log.d("time","time--------"+SafeCode);
 
         return SafeCode;
     }

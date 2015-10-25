@@ -6,7 +6,7 @@ package com.appeaser.deckviewsample;
 public class Configs {
     public static String SAFE_CODE=null;
 
-    public static final String URL_SAFE_CODE="http://139.129.24.127/remoteppt/phonecode.php\n";
-    public static final String URL_LOGIN="";
+    public static final String URL_SAFE_CODE="http://139.129.24.127/remoteppt/phonecode.php";
+    public static final String URL_GET_LIST="http://139.129.24.127/remoteppt/getList.php";
 
 }

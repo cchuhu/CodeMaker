@@ -1,7 +1,6 @@
 package com.appeaser.deckviewsample;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,9 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
+    private String username;
+    private List<Infos> infosList = new ArrayList<>();
+    private Infos info;
 
 
     @Override
@@ -32,6 +36,16 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
      * 初始化界面元素
      */
     private void init() {
+        username = getIntent().getStringExtra("USERNAME");
+        username="adadw@qq.com";
+
+        //初始化控件
+        recyclerView = (RecyclerView) findViewById(R.id.id_recycler_view);
+        //设置布局管理器
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
+        //设置adapter
+        final MyAdapter myAdapter = new MyAdapter(this);
+        recyclerView.setAdapter(myAdapter);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
         //set animation theme,you can set 4 colors at most
@@ -40,38 +54,48 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(MainActivity.this,"已经没有更新的啦",Toast.LENGTH_LONG).show();
 
-                Intent i = new Intent();
-                i.setClass(MainActivity.this, DeckViewSampleActivity.class);
-                MainActivity.this.startActivity(i);
-                swipeRefreshLayout.setRefreshing(false);
+
+                new NetPostConnection(Configs.URL_GET_LIST, new NetPostConnection.SuccessCallback() {
+                    @Override
+                    public void onSuccess(String result) throws JSONException {
+                        if (result.equals("1")) {
+                            Toast.makeText(MainActivity.this, "刷新失败", Toast.LENGTH_LONG).show();
+                        } else {
+                            JSONArray jsonArray = new JSONArray(result);
+                            JSONObject jo;
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                jo = (JSONObject) jsonArray.get(i);
+                                info = new Infos();
+                                info.setPid(jo.getString("ppt_id"));
+                                info.setPnum(jo.getString("page_num"));
+                                infosList.add(info);
+                            }
+                            myAdapter.addAll(infosList);
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                }, new NetPostConnection.FailCallback() {
+                    @Override
+                    public void onFail() {
+
+                    }
+                }, "username", username);
+
+//                Intent i = new Intent();
+//                i.setClass(MainActivity.this, DeckViewSampleActivity.class);
+//                MainActivity.this.startActivity(i);
             }
         });
 
-        //初始化控件
-        recyclerView = (RecyclerView) findViewById(R.id.id_recycler_view);
-        //设置布局管理器
-        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,2));
-        //设置adapter
-        MyAdapter myAdapter = new MyAdapter(this);
-        recyclerView.setAdapter(myAdapter);
 
-        List<Infos> mLists = new ArrayList<>();
-        Infos jb;
-        for(int i=0;i<5;i++){
-            jb = new Infos();
-            jb.setPid(""+1111*i);
-            mLists.add(jb);
-        }
-        myAdapter.addAll(mLists);
+
         myAdapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this,"lalallalalal",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "lalallalala:"+position, Toast.LENGTH_LONG).show();
             }
         });
-
 
     }
 
