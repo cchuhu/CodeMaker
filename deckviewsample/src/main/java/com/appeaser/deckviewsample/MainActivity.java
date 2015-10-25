@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,7 +92,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
                 }, "username", username);
 
 //                Intent i = new Intent();
-//                i.setClass(MainActivity.this, DeckViewSampleActivity.class);
+//                i.setClass(MainActivity.this, DeckViewSampleActivity.c lass);
 //                MainActivity.this.startActivity(i);
             }
         });
@@ -100,14 +101,17 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
         myAdapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
+                current_position = position;
 
-                Toast.makeText(MainActivity.this, "lalallalala:" + position, Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "lalallalala:" + current_position, Toast.LENGTH_LONG).show();
+
                 new NetPostConnection(Configs.URL_CHANGE_PID, new NetPostConnection.SuccessCallback() {
                     @Override
                     public void onSuccess(String result) throws JSONException {
                         System.out.println(" List Table");
                         Intent intent = new Intent(MainActivity.this,DeckViewSampleActivity.class);
-                        intent.putExtra("pnum", Integer.parseInt(result));
+//                        intent.putExtra("pnum", Integer.parseInt(result));
+                        intent.putExtra("pnum",Configs.listInfos.get(current_position).getPnum());
                         startActivity(intent);
                     }
                 }, new NetPostConnection.FailCallback() {
@@ -120,6 +124,8 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
         });
 
     }
+
+    private int current_position;
 
     //断开连接
     private void breakConnection(){

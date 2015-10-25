@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -70,7 +71,8 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
         if (mEntries == null) {
             mEntries = new ArrayList<>();
             KEY = 0;
-            int length =intent.getExtras().getInt("pnum");
+            int length =Integer.valueOf(intent.getStringExtra("pnum"));
+            Log.d("Length","Length............."+length);
             for (int i = 1; i < length; i++) {
                 Datum datum = new Datum();
                 datum.id = generateUniqueKey();
@@ -78,7 +80,7 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
                 datum.headerTitle = "Image ID " + datum.id;
                 mEntries.add(datum);
             }
-            System.out.println(mEntries.size()+"%%%%%%%%%%%%");
+            System.out.println(mEntries.size() + "%%%%%%%%%%%%");
         }
 
         // Callback implementation
