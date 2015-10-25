@@ -87,7 +87,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
 //                MainActivity.this.startActivity(i);
             }
         });
-
+        swipeRefreshLayout.setRefreshing(true);
 
 
         myAdapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener() {

@@ -24,6 +24,11 @@ public class MyAdapter extends RecyclerView.Adapter {
         myList.addAll(lists);
         notifyDataSetChanged();
     }
+    public void Clear(){
+        myList.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     //在这里设置我们下面自己设置的ViewHolder并返回
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
