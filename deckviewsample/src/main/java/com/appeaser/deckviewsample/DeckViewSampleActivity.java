@@ -1,6 +1,7 @@
 package com.appeaser.deckviewsample;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -45,10 +46,12 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
     // SavedInstance bundle keys
     final String CURRENT_SCROLL = "current.scroll", CURRENT_LIST = "current.list";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_view_sample);
+        Intent intent = getIntent();
 
         mDeckView = (DeckView) findViewById(R.id.deckview);
         mDefaultThumbnail = BitmapFactory.decodeResource(getResources(), R.drawable.default_thumbnail);
@@ -66,8 +69,9 @@ public class DeckViewSampleActivity extends Activity implements NetPostConnectio
 
         if (mEntries == null) {
             mEntries = new ArrayList<>();
-
-            for (int i = 1; i < 20; i++) {
+            KEY = 0;
+            int length =intent.getExtras().getInt("pnum");
+            for (int i = 1; i < length; i++) {
                 Datum datum = new Datum();
                 datum.id = generateUniqueKey();
                 datum.link = "http://lorempixel.com/" + imageSize + "/" + imageSize + "/sports/" + "ID " + datum.id + "/";

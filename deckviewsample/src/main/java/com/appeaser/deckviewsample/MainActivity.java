@@ -14,15 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends Activity implements NetPostConnection.SuccessCallback,NetPostConnection.FailCallback{
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private String username;
-    private List<Infos> infosList = new ArrayList<>();
     private Infos info;
     private TextView cancel;
 
@@ -40,6 +36,12 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
      */
     private void init() {
         cancel = (TextView) findViewById(R.id.tv_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //填写注销事件
+            }
+        });
 
         username = getIntent().getStringExtra("USERNAME");
         username="adadw@qq.com";
@@ -59,7 +61,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                infosList.clear();
+                Configs.listInfos.clear();
                 myAdapter.Clear();
 
                 new NetPostConnection(Configs.URL_GET_LIST, new NetPostConnection.SuccessCallback() {
@@ -75,9 +77,9 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
                                 info = new Infos();
                                 info.setPid(jo.getString("ppt_id"));
                                 info.setPnum(jo.getString("page_num"));
-                                infosList.add(info);
+                                Configs.listInfos.add(info);
                             }
-                            myAdapter.addAll(infosList);
+                            myAdapter.addAll(Configs.listInfos);
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }
@@ -98,12 +100,14 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
         myAdapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
+
                 Toast.makeText(MainActivity.this, "lalallalala:" + position, Toast.LENGTH_LONG).show();
                 new NetPostConnection(Configs.URL_CHANGE_PID, new NetPostConnection.SuccessCallback() {
                     @Override
                     public void onSuccess(String result) throws JSONException {
                         System.out.println(" List Table");
                         Intent intent = new Intent(MainActivity.this,DeckViewSampleActivity.class);
+                        intent.putExtra("pnum", Integer.parseInt(result));
                         startActivity(intent);
                     }
                 }, new NetPostConnection.FailCallback() {
@@ -111,7 +115,7 @@ public class MainActivity extends Activity implements NetPostConnection.SuccessC
                     public void onFail() {
 
                     }
-                }, "pid" , position);
+                }, "pid" , Configs.listInfos.get(position).getPid());
             }
         });
 
